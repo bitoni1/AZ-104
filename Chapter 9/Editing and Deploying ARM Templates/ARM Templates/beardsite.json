@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.1",
     "parameters": {
         "virtualMachines_backendSERVER_name": {
@@ -42,10 +42,10 @@
     "variables": {
         "BENSG":  "backendSERVER-nsg",
         "FENSG": "frontendSERVER-nsg",
-        "BEINET": "backendSERVER-inet-889",
-        "FEINET": "frontendSERVER-inet-859",
-        "BEIPv4": "backendSERVER-ip",
-        "FEIPv4": "frontendSERVER-ip",
+        "BEINET": "backendserver889",
+        "FEINET": "frontendserver859",
+        "BEIPv4": "backendserver-ip",
+        "FEIPv4": "frontendserver-ip",
         "VNET": "BeardSite-vnet",
         "frontend": "frontendSERVER",
         "backend": "backendSERVER",
@@ -289,6 +289,60 @@
                 }
             }
         },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[variables('backend')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
+            ],
+            "tags": {
+                "BeardSite": "[resourceGroup().location]"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_B1s"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2016-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(variables('backend-primary'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        },
+                        "diskSizeGB": 127
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[variables('backend-primary')]",
+                    "adminUsername": "beardmin",
+                    "adminPassword": "mM%Vc!562yTj",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
+                        }
+                    ]
+                }
+            }
+        },        
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
