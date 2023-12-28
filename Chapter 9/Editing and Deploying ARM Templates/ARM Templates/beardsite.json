@@ -2,65 +2,64 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.1",
     "parameters": {
-        "virtualMachines_backendSERVER_name": {
-            "defaultValue": "backendSERVER",
+        "virtualMachines_frodoVM_name": {
+            "defaultValue": "frodoVM",
             "type": "String"
         },
-        "virtualMachines_frontendSERVER_name": {
-            "defaultValue": "frontendSERVER",
+        "virtualMachines_gandalfVM_name": {
+            "defaultValue": "gandalfVM",
             "type": "String"
         },
-        "virtualNetworks_BeardSite_vnet_name": {
-            "defaultValue": "BeardSite-vnet",
+        "virtualNetworks_MiddleEarth_vnet_name": {
+            "defaultValue": "MiddleEarth-vnet",
             "type": "String"
         },
-        "networkInterfaces_backendserver889_name": {
-            "defaultValue": "backendserver889",
+        "networkInterfaces_aragornNIC_name": {
+            "defaultValue": "aragornNIC",
             "type": "String"
         },
-        "publicIPAddresses_backendSERVER_ip_name": {
-            "defaultValue": "backendSERVER-ip",
+        "publicIPAddresses_sauronVM_ip_name": {
+            "defaultValue": "sauronVM-ip",
             "type": "String"
         },
-        "networkInterfaces_frontendserver859_name": {
-            "defaultValue": "frontendserver859",
+        "networkInterfaces_legolasNIC_name": {
+            "defaultValue": "legolasNIC",
             "type": "String"
         },
-        "publicIPAddresses_frontendSERVER_ip_name": {
-            "defaultValue": "frontendSERVER-ip",
+        "publicIPAddresses_gimliVM_ip_name": {
+            "defaultValue": "gimliVM-ip",
             "type": "String"
         },
-        "networkSecurityGroups_backendSERVER_nsg_name": {
-            "defaultValue": "backendSERVER-nsg",
+        "networkSecurityGroups_frodoVM_nsg_name": {
+            "defaultValue": "frodoVM-nsg",
             "type": "String"
         },
-        "networkSecurityGroups_frontendSERVER_nsg_name": {
-            "defaultValue": "frontendSERVER-nsg",
+        "networkSecurityGroups_aragornVM_nsg_name": {
+            "defaultValue": "aragornVM-nsg",
             "type": "String"
         }
     },
     "variables": {
-        "BENSG":  "backendSERVER-nsg",
-        "FENSG": "frontendSERVER-nsg",
-        "BEINET": "backendserver889",
-        "FEINET": "frontendserver859",
-        "BEIPv4": "backendserver-ip",
-        "FEIPv4": "frontendserver-ip",
-        "VNET": "BeardSite-vnet",
-        "frontend": "frontendSERVER",
-        "backend": "backendSERVER",
-        "backend-primary": "backendSERVER-primary",
-        "backend-secondary": "backendSERVER-secondry"
-
+        "frodoNSG": "frodoVM-nsg",
+        "gandalfNSG": "gandalfVM-nsg",
+        "aragornNIC": "aragornNIC",
+        "legolasNIC": "legolasNIC",
+        "sauronIPv4": "sauronVM-ip",
+        "gimliIPv4": "gimliVM-ip",
+        "MiddleEarthVNET": "MiddleEarth-vnet",
+        "frodo": "frodoVM",
+        "gandalf": "gandalfVM",
+        "aragornPrimary": "aragornVM-primary",
+        "aragornSecondary": "aragornVM-secondary"
     },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-07-01",
-            "name": "[variables('BENSG')]",
+            "name": "[variables('frodoNSG')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "properties": {
                 "securityRules": [
@@ -87,10 +86,10 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-07-01",
-            "name": "[variables('FENSG')]",
+            "name": "[variables('gandalfNSG')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "properties": {
                 "securityRules": [
@@ -168,10 +167,10 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2019-07-01",
-            "name": "[variables('BEIPv4')]",
+            "name": "[variables('sauronIPv4')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "sku": {
                 "name": "Basic",
@@ -188,10 +187,10 @@
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2019-07-01",
-            "name": "[variables('FEIPv4')]",
+            "name": "[variables('gimliIPv4')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "sku": {
                 "name": "Basic",
@@ -208,10 +207,10 @@
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-07-01",
-            "name": "[variables('VNET')]",
+            "name": "[variables('MiddleEarthVNET')]",
             "location": "[resourceGroup().location]",
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "properties": {
                 "addressSpace": {
@@ -221,7 +220,7 @@
                 },
                 "subnets": [
                     {
-                        "name": "default",
+                        "name": "shire",
                         "properties": {
                             "addressPrefix": "10.0.4.0/24",
                             "delegations": [],
@@ -238,13 +237,13 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
-            "name": "[variables('backend-primary')]",
+            "name": "[variables('aragornPrimary')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('aragornNIC'))]"
             ],
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "properties": {
                 "hardwareProfile": {
@@ -259,7 +258,7 @@
                     },
                     "osDisk": {
                         "osType": "Windows",
-                        "name": "[concat(variables('backend-primary'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
+                        "name": "[concat(variables('aragornPrimary'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -270,9 +269,9 @@
                     "dataDisks": []
                 },
                 "osProfile": {
-                    "computerName": "[variables('backend-primary')]",
-                    "adminUsername": "beardmin",
-                    "adminPassword": "mM%Vc!562yTj",
+                    "computerName": "[variables('aragornPrimary')]",
+                    "adminUsername": "lotradmin",
+                    "adminPassword": "OneRingToRuleThemAll",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true
@@ -283,7 +282,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('aragornNIC'))]"
                         }
                     ]
                 }
@@ -292,13 +291,13 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
-            "name": "[variables('backend')]",
+            "name": "[variables('aragornSecondary')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('aragornNIC'))]"
             ],
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "properties": {
                 "hardwareProfile": {
@@ -313,7 +312,7 @@
                     },
                     "osDisk": {
                         "osType": "Windows",
-                        "name": "[concat(variables('backend-primary'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
+                        "name": "[concat(variables('aragornSecondary'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -324,9 +323,9 @@
                     "dataDisks": []
                 },
                 "osProfile": {
-                    "computerName": "[variables('backend-primary')]",
-                    "adminUsername": "beardmin",
-                    "adminPassword": "mM%Vc!562yTj",
+                    "computerName": "[variables('aragornSecondary')]",
+                    "adminUsername": "lotradmin",
+                    "adminPassword": "OneRingToRuleThemAll",
                     "windowsConfiguration": {
                         "provisionVMAgent": true,
                         "enableAutomaticUpdates": true
@@ -337,61 +336,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
-                        }
-                    ]
-                }
-            }
-        },        
-        {
-            "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2019-03-01",
-            "name": "[variables('backend-secondary')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
-            ],
-            "tags": {
-                "BeardSite": "[resourceGroup().location]"
-            },
-            "properties": {
-                "hardwareProfile": {
-                    "vmSize": "Standard_B1s"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2016-Datacenter",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "osType": "Windows",
-                        "name": "[concat(variables('backend-secondary'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
-                        "createOption": "FromImage",
-                        "caching": "ReadWrite",
-                        "managedDisk": {
-                            "storageAccountType": "Standard_LRS"
-                        },
-                        "diskSizeGB": 127
-                    },
-                    "dataDisks": []
-                },
-                "osProfile": {
-                    "computerName": "[variables('backend-secondary')]",
-                    "adminUsername": "beardmin",
-                    "adminPassword": "mM%Vc!562yTj",
-                    "windowsConfiguration": {
-                        "provisionVMAgent": true,
-                        "enableAutomaticUpdates": true
-                    },
-                    "secrets": [],
-                    "allowExtensionOperations": true
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_backendserver889_name'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('aragornNIC'))]"
                         }
                     ]
                 }
@@ -400,17 +345,17 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
-            "name": "[variables('frontend')]",
+            "name": "[variables('frodo')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_frontendserver859_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('aragornNIC'))]"
             ],
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_B1s"
+                    "vmSize": "Standard_B2s"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -421,7 +366,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(variables('frontend'), '_OsDisk_1_c6d33243208549028193e578673837b9')]",
+                        "name": "[concat(variables('frodo'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -432,118 +377,70 @@
                     "dataDisks": []
                 },
                 "osProfile": {
-                    "computerName": "[variables('frontend')]",
-                    "adminUsername": "beardmin",
-                    "adminPassword": "mM%Vc!562yTj",
+                    "computerName": "[variables('frodo')]",
+                    "adminUsername": "lotradmin",
+                    "adminPassword": "OneRingToRuleThemAll",
                     "linuxConfiguration": {
-                        "disablePasswordAuthentication": false,
-                        "provisionVMAgent": true
-                    },
-                    "secrets": [],
-                    "allowExtensionOperations": true
+                        "disablePasswordAuthentication": false
+                    }
                 },
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_frontendserver859_name'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('aragornNIC'))]"
                         }
                     ]
                 }
             }
         },
         {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2019-07-01",
-            "name": "[concat(variables('VNET'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('VNET'))]"
-            ],
-            "properties": {
-                "addressPrefix": "10.0.4.0/24",
-                "delegations": [],
-                "privateEndpointNetworkPolicies": "Enabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2019-07-01",
-            "name": "[variables('BEINET')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[variables('gandalf')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('BEIPv4'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNET'), 'default')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('BENSG'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('legolasNIC'))]"
             ],
             "tags": {
-                "BeardSite": "[resourceGroup().location]"
+                "MiddleEarth": "[resourceGroup().location]"
             },
             "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "10.0.4.4",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('BEIPv4'))]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNET'), 'default')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
+                "hardwareProfile": {
+                    "vmSize": "Standard_B2s"
                 },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('BENSG'))]"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2019-07-01",
-            "name": "[variables('FEINET')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('FEIPv4'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNET'), 'default')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('FENSG'))]"
-            ],
-            "tags": {
-                "BeardSite": "[resourceGroup().location]"
-            },
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "10.0.4.5",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('FEIPv4'))]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('VNET'), 'default')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "18.04-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(variables('gandalf'), '_OsDisk_1_ef3ab3c577ea4dd5827852baae056008')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
                 },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('FENSG'))]"
+                "osProfile": {
+                    "computerName": "[variables('gandalf')]",
+                    "adminUsername": "lotradmin",
+                    "adminPassword": "OneRingToRuleThemAll",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('legolasNIC'))]"
+                        }
+                    ]
                 }
             }
         }
