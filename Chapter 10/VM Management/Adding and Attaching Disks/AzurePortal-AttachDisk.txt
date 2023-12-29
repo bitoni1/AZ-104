@@ -1,0 +1,28 @@
+## Navigate to Azure portal and login
+portal.azure.com
+
+##Open resource group, and resource
+Resource Groups > ExampleGroup > ExampleVM > Disks
+
+##Add Data Disks
+Select + Add Data Disks
+
+Options to upgrade existing, or attach a new
+
+Types Available:
+Blob, Snapshot, Blank(defualt)
+
+Account Types:
+Standard HDD
+Premium SSD
+
+##Attach Disks via CLI
+az vm disk attach -g examplegroup --vm-name vmexample --name superawesomedisk --new --size-gb 32
+
+As it stands in this outline, we would still need to log and initialize these disks for them to be usable
+
+Questions:
+
+Which virtual machine series cannot change the disk caching? Filling in the blank: _____ series and _____ series VM's. (Choose two)
+
+B, L series

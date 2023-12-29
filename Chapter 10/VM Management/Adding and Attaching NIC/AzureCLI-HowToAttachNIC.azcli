@@ -1,0 +1,15 @@
+## Each command is a one liner, and should be run sequentially
+
+## Allow each command to complete, before proceeding.
+az vm deallocate --resource-group examplegroup --name examplename
+
+az network nic create \
+--resource-group examplegroup \
+--name examplesecret \
+--subnet example
+
+az vm nic add \
+--resource-group examplegroup
+--vm-name examplename
+--nics examplesecret
+

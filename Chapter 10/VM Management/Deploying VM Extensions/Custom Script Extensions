@@ -1,0 +1,4 @@
+Deploys a custom script extension to your resource.
+This example uses a github URI link which provides the script to add and execute in the custom script extension.
+
+set-azvmcustomscriptextension -resourcegroupname examplegroup -vmname exampleserver -location eastus2example -fileuri [github RAW uri] -name examplecustomextensionname
