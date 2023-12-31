@@ -1,0 +1,20 @@
+Deploying the project to your environment
+
+Step by Step:
+* Log to Azure Portal and deploy and Migration project
+
+* Open the Discover and Asses tab, then select Discover Machines. 
+
+* Download the OVA file - from there, we will deploy the OVA file to the source vCenter. 
+
+* Navigate to your vCenter web client and right click host > deploy.
+
+* Select Local File > Find the OVA file > Open then Next. 
+
+* Select datacenter > Select Resource > Choose Storage location > Network Location > Finish. This will begin OVA deployment.
+
+* Open the Collector Program (Desktop) > Specify Azure Cloud (Global Azure) > Save.
+
+* After checks are completed, connect to vCenter Server. Username/Password > Connect > Select Datacenter group to detect all machines in this cluster.
+
+* Provide project ID and Project Key from migration project to collector > Connect
