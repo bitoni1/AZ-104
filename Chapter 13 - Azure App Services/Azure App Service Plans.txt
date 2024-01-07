@@ -1,0 +1,20 @@
+Azure App Service Plans
+
+Elastic - responds to debands and requests as needed
+
+1 cpu, 3gb ram can scale up and increase as needed
+
+Scaling out - Adding more servers to the group to address needs
+Load balancer is auto deployed in front to balance traffic between
+
+Auto Scaling - Detects when thresholds have been reached, can auto deploy instances on an as needed basis
+When demand dies down, it will scale back accordingly.
+
+Custom Domains - Can bring domain to Azure
+SSL certificates can be brought in as well
+
+Deployment Slots - Deploys to staging buckets for verification in dev, can be swapped into prod and vise versa
+
+App Service Environment - Spins up app services connected directly to a private vnet. Can be connected through site-to-site tunnel
+with an internal load balancer. Highly secure, and not accesible to the public.
+

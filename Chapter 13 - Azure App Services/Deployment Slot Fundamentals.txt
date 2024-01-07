@@ -1,0 +1,48 @@
+Deployment Slot Fundamentals
+----------------------------
+Powerful app service 
+
+Certain plans have access to a # of extra environments
+
+For example: My App is a production application 
+
+A staging slot can be created, which replicates the same code, with a new DNS URL
+
+This alows for testing before moving to production.
+
+A swap button is available, which essentially swaps the DNS records, 
+which is nice since there is no copy of code
+
+Something to note: Code is running on same hardware even though different DNS
+
+Performance testing against staging will also put prod under load 
+
+Same app service = same hardware
+
+Another thing to mention: These are seperate environments which can have 
+independant  settings for each environment 
+
+Production app and Staging app can have their own sql databases with their own
+connection strings. These configurations are completed in the Azure Portal
+
+
+For example: 
+Environment Variables can be configured inside your code and inside of Azure Portal. 
+This enables your code to reach out to azure for this information, instead of hardcoding it in source.
+
+    - EV used to determine what environment the app is in (Prod vs Dev)
+        - If Prod then pass Prod DB connection string
+        - Else pass Dev DB connection string
+
+These settings are known as sticky settings since they persist across swaps.
+
+Things that are sticky:
+
+General settings
+Handler Mappings
+Monitoring
+Web Jobs 
+App Settings 
+DB Connection string
+
+These can be configured to be non-sticky

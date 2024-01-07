@@ -1,0 +1,11 @@
+Understanding PaaS 
+
+- Traditional approach would include responsibility of:
+    * Physical Hardware maintenance
+    * OS Updates and Patches 
+    * Softwares and dependencies
+    * Roles - IIS, APACHE, etc. Patching and maintenance
+
+-PaaS comes in and handles Physical, OS, Software/Dependencies allowing 
+ you the developer to focus on your code. 
+

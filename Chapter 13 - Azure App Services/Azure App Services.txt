@@ -1,0 +1,10 @@
+Understanding Azure App Services
+    - Web Apps - ASP.Net, .NET Core, Java Ruby, Node, PHP, Python
+        - Web Jobs Can run programs alongside Web Apps - cmd, bat, exec, ps1 , jar, bash
+    - APIs - Ability to deploy existing API code into a Web App.
+        - Swagger can parse through your code, and develop documentation for your
+    - Mobile Apps - Mobile specific features and push notifications available
+    - Function Apps - Serverless Computing: Code that is run when called or on schedules. RAW code: C+, Java. 
+        Completes specific tasks when conditions met 
+        Can listen for:
+        http, events, webhook, blob storage, timer

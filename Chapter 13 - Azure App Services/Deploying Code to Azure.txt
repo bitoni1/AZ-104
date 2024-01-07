@@ -1,0 +1,15 @@
+Code Deployment Options
+
+- Visual Studio Web Deployment
+
+- FTP
+
+- Kudu
+    * To access Kudu, which of the following should you add to the azurewebsites.net URL?
+
+    Answer: scm.
+
+- Source Control CICD - Continuious Integration Continuious Deployment
+
+
+
