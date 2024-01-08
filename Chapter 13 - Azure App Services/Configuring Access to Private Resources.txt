@@ -1,0 +1,15 @@
+Securely Accessing On Premise Resources
+----------------------------------------
+
+Hybrid Connection Manager(On Premise Data Gateway)
+Installed on a local VM or server on Premise
+When launched, it gives azure portal login
+Login to azure portal and connects to your desired sub
+Serves as a middle man between on-prem and azure
+
+
+Another option is The App Service Environment:
+Builds out attached app service plan to your vnet
+This enables direct connection via private IPs through the azure vnet
+A Site to Site tunnel can be used to connect the App Service to On-Prem databases
+

@@ -1,0 +1,13 @@
+Dyamic Content in CDN
+----------------------
+Dynamic content when navigated to, is cached on edge server.
+
+Whenever we go to refresh, we are now served cached data, not
+
+the new items that are dynammic to the site
+
+By default - CDNs ignore query strings
+
+Settings must be configured to route to origin server through CDN network 
+to realize the non-cached, dynamic content
+
